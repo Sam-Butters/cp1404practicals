@@ -3,6 +3,7 @@ CP1404 - Score Menu
 
 Psuedocode:
 function main
+    get score
     display menu
     get choice
     while choice != quit option
@@ -37,7 +38,7 @@ main()
 
 def main():
     """Display a menu and get the user's menu choice."""
-    score = ""
+    score = get_valid_score()
     menu = "(G)et score \n(P)rint score \n(S)how stars \n(Q)uit"
     print(menu)
     choice = input(": ").upper()
@@ -45,15 +46,9 @@ def main():
         if choice == "G":
             score = get_valid_score()
         elif choice == "P":
-            if score == "":
-                print("No score recorded")
-            else:
-                print(f"Score: {score}")
+            print(f"Score: {score}")
         elif choice == "S":
-            if score == "":
-                print("No score recorded")
-            else:
-                show_stars(score)
+            show_stars(score)
         else:
             print("Invalid choice")
         print(menu)
@@ -65,7 +60,7 @@ def get_valid_score():
     """Get a score between 0 and 100."""
     score = int(input("Enter score: "))
     while score < 0 or score > 100:
-        print("Invalid score")
+        print("Invalid score. Must be between 0 and 100")
         score = int(input("Enter score: "))
     return score
 
