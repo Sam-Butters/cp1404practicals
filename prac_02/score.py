@@ -17,7 +17,7 @@ def main():
 
 
 def determine_score_category(score):
-    """Determine the category of a user's score."""
+    """Determine the category of a score."""
     if score >= 90:
         return "Excellent"
     elif score >= 50:
