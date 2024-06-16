@@ -17,11 +17,11 @@ for i in range(quantity_of_quick_picks):
     quick_pick = []
     while len(quick_pick) < NUMBERS_PER_GAME:
         number = random.randint(MINIMUM_NUMBER, MAXIMUM_NUMBER)
-        if number not in quick_pick:  # Ensures no repeating numbers
+        if number not in quick_pick:  # Ensure no repeating numbers
             quick_pick.append(number)
     quick_pick.sort()
     quick_picks_games.append(quick_pick)
 
 for quick_pick in quick_picks_games:
-    # Nested {} to match width format to constant value
+    # Nested {} to match width format to value defined in constant
     print(" ".join(f"{number:{number_width}}" for number in quick_pick))
