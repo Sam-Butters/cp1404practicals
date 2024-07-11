@@ -8,7 +8,7 @@ Actual: 40+, took a break and lost count.
 
 
 def main():
-    """Create and print a dictionary of names and emails """
+    """Create and print a dictionary of names and emails."""
     email_to_name = {}
     email = input('Enter your email: ')
 
@@ -22,7 +22,7 @@ def main():
 
 
 def determine_name(email):
-    """Determine the name associated with a given email"""
+    """Determine the name associated with a given email."""
     suggested_name = email.split('@')[0].replace('.', ' ').title()
     name_confirmation = input(f"Is your name {suggested_name}? (Y/n)").upper()
     if name_confirmation == "Y" or name_confirmation == "":

@@ -10,8 +10,8 @@ CHAMPION_INDEX = 2
 def main():
     """Get data from a file, process and display results."""
     lines = get_records(FILENAME)
-    champion_to_win_number, champion_countries = process_data(lines)
-    print_results(champion_to_win_number, champion_countries)
+    champion_to_win_count, champion_countries = process_data(lines)
+    print_results(champion_to_win_count, champion_countries)
 
 
 def get_records(filename):
