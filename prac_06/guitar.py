@@ -1,10 +1,10 @@
 """
-CP1404 Prac06 - Guitars!
+CP1404 Prac06 - Guitar
 Sam Butters
 Time started: 13:41
 Time finished:
 """
-CURRENT_YEAR = 2017
+CURRENT_YEAR = 2024
 VINTAGE_AGE = 50
 
 
@@ -12,6 +12,7 @@ class Guitar:
     """Represent information about a guitar."""
 
     def __init__(self, name="", year=0, cost=0.0):
+        """Initialize a Guitar."""
         self.name = name
         self.year = year
         self.cost = cost
@@ -21,12 +22,9 @@ class Guitar:
         return f"{self.name} ({self.year}) : ${self.cost:.2f}"
 
     def get_age(self):
-        """Return the age of a Guitar."""
-        age = CURRENT_YEAR - self.year
-        return age
+        """Get the age of a guitar based on the CURRENT_YEAR."""
+        return CURRENT_YEAR - self.year
 
     def is_vintage(self):
-        """Determine if a Guitar is considered vintage."""
-        if self.get_age() >= VINTAGE_AGE:
-            return True
-        return False
+        """Determine if a Guitar is considered vintage or not based on age."""
+        return self.get_age() >= VINTAGE_AGE
