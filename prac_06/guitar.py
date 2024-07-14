@@ -4,6 +4,8 @@ Sam Butters
 Time started: 13:41
 Time finished:
 """
+CURRENT_YEAR = 2017
+VINTAGE_AGE = 50
 
 
 class Guitar:
@@ -18,13 +20,13 @@ class Guitar:
         """Return a string representation of a Guitar."""
         return f"{self.name} ({self.year}) : ${self.cost:.2f}"
 
-    def get_age(self, current_year):
+    def get_age(self):
         """Return the age of a Guitar."""
-        age = current_year - self.year
+        age = CURRENT_YEAR - self.year
         return age
 
-    def is_vitage(self, age):
+    def is_vintage(self):
         """Determine if a Guitar is considered vintage."""
-        if age >= 50:
+        if self.get_age() >= VINTAGE_AGE:
             return True
         return False
