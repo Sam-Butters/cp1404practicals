@@ -101,31 +101,28 @@ MENU = """- (L)oad projects
 def main():
     """Run the project management program."""
     print("Welcome to Pythonic Project Management")
-    # TODO: Add load project functionality
     projects = []
-    # TODO: possible fix: if projects list is empty, use DEFAULT_FILE, else ask for new file
+    load_projects(projects)
     print(MENU)
     menu_choice = input(">>> ").upper()
     while menu_choice != "Q":
         if menu_choice == "L":
-            print("Load projects")
-            # TODO: Add load_projects function
+            print("Load projects")  # for testing
             load_projects(projects)
-
         elif menu_choice == "S":
-            print("Save projects")
+            print("Save projects")  # for testing
             # TODO: add save_project function
         elif menu_choice == "D":
-            print("Display projects")
-            # TODO: add display_projects function
+            print("Display projects")  # for testing
+            display_projects(projects)
         elif menu_choice == "F":
-            print("Filter projects by date")
+            print("Filter projects by date")  # for testing
             # TODO: add filter_projects function
         elif menu_choice == "A":
-            print("Add new project")
+            print("Add new project")  # for testing
             # TODO: add add_project function
         elif menu_choice == "U":
-            print("Update project")
+            print("Update project")  # for testing
             # TODO: add update_project function
         else:
             print("Invalid choice")
@@ -135,6 +132,21 @@ def main():
     # TODO: add save choice
     # TODO: if save choice = yes, run save function
     print("Thank you for using custom-built project management software.")
+
+
+def display_projects(projects):
+    """Display projects from projects list."""
+    # for project in projects:
+    #     print(project)
+    print("Incomplete projects:")
+    for project in projects:
+        if project.completion_percentage != 100:
+            print("\t",project)
+    print("Completed projects:")
+    for project in projects:
+        if project.completion_percentage == 100:
+            print("\t",project)
+
 
 
 def load_projects(projects):
