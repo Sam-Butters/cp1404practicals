@@ -120,7 +120,7 @@ def main():
             # TODO: add filter_projects function
         elif menu_choice == "A":
             print("Add new project")  # for testing
-            # TODO: add add_project function
+            add_project(projects)
         elif menu_choice == "U":
             print("Update project")  # for testing
             # TODO: add update_project function
@@ -132,6 +132,19 @@ def main():
     # TODO: add save choice
     # TODO: if save choice = yes, run save function
     print("Thank you for using custom-built project management software.")
+
+
+def add_project(projects):
+    """Add a project to projects list."""
+    #  TODO: can we add today's date as the default value? eg if start_date = "", date == today's' date
+    print("Let's add a new project")
+    name = input("Name: ")
+    start_date = input("Start date (dd/mm/yy): ")
+    priority = int(input("Priority: "))
+    cost_estimate = float(input("Cost estimate: "))
+    percent_complete = int(input("Percentage complete: "))
+    project = Project(name, start_date, priority, cost_estimate, percent_complete)
+    projects.append(project)
 
 
 def display_projects(projects):
