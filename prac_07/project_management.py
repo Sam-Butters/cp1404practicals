@@ -111,7 +111,7 @@ def main():
             load_projects(projects)
         elif menu_choice == "S":
             print("Save projects")  # for testing
-            # TODO: add save_project function
+            save_projects(projects)
         elif menu_choice == "D":
             print("Display projects")  # for testing
             display_projects(projects)
@@ -124,8 +124,6 @@ def main():
         elif menu_choice == "U":
             print("Update project")  # for testing
             update_project(projects)
-
-
         else:
             print("Invalid choice")
         print(MENU)
@@ -134,6 +132,17 @@ def main():
     # TODO: add save choice
     # TODO: if save choice = yes, run save function
     print("Thank you for using custom-built project management software.")
+
+
+def save_projects(projects):
+    """Save projects to file"""
+    save_file_name = input("Where do you want to save your projects? (filename.txt) ")
+    with open(save_file_name, "w") as outfile:
+        print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
+        for project in projects:
+            print(
+                f"{project.name}\t{project.start_date}\t{project.priority}\t{project.cost_estimate}\t"
+                f"{project.completion_percentage}", file=outfile)
 
 
 def update_project(projects):
