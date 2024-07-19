@@ -18,8 +18,9 @@ class Project:
 
     def __str__(self):
         """Return a string representation of the Project object."""
-        return (f"{self.name}, start: {self.start_date}, priority {self.priority}, estimate: ${self.cost_estimate:.2f}, "
-                f"completion: {self.completion_percentage}%")
+        return (
+            f"{self.name}, start: {self.start_date}, priority {self.priority}, estimate: ${self.cost_estimate:.2f}, "
+            f"completion: {self.completion_percentage}%")
 
     def __lt__(self, other):
         """Compare this project start date to another project start date."""

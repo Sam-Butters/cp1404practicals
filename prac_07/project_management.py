@@ -86,6 +86,7 @@ function update_project(projects)
     get new priority (can be blank)
 
 """
+import datetime
 from prac_07.project import Project
 
 DEFAULT_FILE = "projects.txt"
@@ -117,7 +118,7 @@ def main():
             display_projects(projects)
         elif menu_choice == "F":
             print("Filter projects by date")  # for testing
-            # TODO: add filter_projects function
+            filter_project_dates(projects)
         elif menu_choice == "A":
             print("Add new project")  # for testing
             add_project(projects)
@@ -128,10 +129,22 @@ def main():
             print("Invalid choice")
         print(MENU)
         menu_choice = input(">>> ").upper()
-    print("Would you like to save to projects.txt?")
+    print(f"Would you like to save to {DEFAULT_FILE}?")
     # TODO: add save choice
-    # TODO: if save choice = yes, run save function
+    save_choice = input(">>> (Y/n) ").upper()
+    if save_choice == "Y" or save_choice == "":
+        save_projects(projects)
     print("Thank you for using custom-built project management software.")
+
+
+def filter_project_dates(projects):
+    """Filter projects by user chosen date."""
+    filter_date_string = input("Show projects that start after date (dd/mm/yyyy): ")
+    filter_date = datetime.datetime.strptime(filter_date_string, "%d/%m/%Y").date()
+    for project in projects:
+        start_date = datetime.datetime.strptime(project.start_date, "%d/%m/%Y").date()
+        if filter_date < start_date:
+            print(project)
 
 
 def save_projects(projects):
@@ -147,7 +160,6 @@ def save_projects(projects):
 
 def update_project(projects):
     """Update a selected project's completion percentage and priority."""
-    # TODO: add update_project function
     for number, project in enumerate(projects, start=1):
         print(f"{number} {project}")
     project_choice = projects[int(input("Project choice: ")) - 1]
@@ -162,7 +174,10 @@ def add_project(projects):
     #  TODO: can we add today's date as the default value? eg if start_date = "", date == today's' date
     print("Let's add a new project")
     name = input("Name: ")
-    start_date = input("Start date (dd/mm/yy): ")
+    start_date = input("Start date (dd/mm/yyyy): ")
+    # Use today's date if input is empty
+    if start_date == "":
+        start_date = str(datetime.date.today().strftime("%d/%m/%Y"))
     priority = int(input("Priority: "))
     cost_estimate = float(input("Cost estimate: "))
     percent_complete = int(input("Percentage complete: "))
@@ -194,7 +209,6 @@ def load_projects(projects):
             file = DEFAULT_FILE
         # TODO: add error checking to ensure file exists
     with open(file, "r") as infile:
-        # TODO: consider grabbing the first line to print with later
         infile.readline()  # Bypass the headings line
         for line in infile:
             parts = line.strip().split("\t")
