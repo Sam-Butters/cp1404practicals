@@ -86,6 +86,7 @@ function update_project(projects)
     get new priority (can be blank)
 
 """
+from prac_07.project import Project
 
 DEFAULT_FILE = "projects.txt"
 MENU = """- (L)oad projects
@@ -101,12 +102,16 @@ def main():
     """Run the project management program."""
     print("Welcome to Pythonic Project Management")
     # TODO: Add load project functionality
+    projects = []
+    # TODO: possible fix: if projects list is empty, use DEFAULT_FILE, else ask for new file
     print(MENU)
     menu_choice = input(">>> ").upper()
     while menu_choice != "Q":
         if menu_choice == "L":
             print("Load projects")
             # TODO: Add load_projects function
+            load_projects(projects)
+
         elif menu_choice == "S":
             print("Save projects")
             # TODO: add save_project function
@@ -130,5 +135,34 @@ def main():
     # TODO: add save choice
     # TODO: if save choice = yes, run save function
     print("Thank you for using custom-built project management software.")
+
+
+def load_projects(projects):
+    """Load a project from file."""
+    if not projects:  # Check if projects list is empty to determine if this is the first time running
+        file = DEFAULT_FILE
+    else:
+        file = input("File name: ")  # Ask the user for a file name, set as default if user hits enter
+        if file == "":
+            file = DEFAULT_FILE
+        # TODO: add error checking to ensure file exists
+    with open(file, "r") as infile:
+        # TODO: consider grabbing the first line to print with later
+        infile.readline()  # Bypass the headings line
+        for line in infile:
+            parts = line.strip().split("\t")
+            name = parts[0]
+            start_date = parts[1]
+            priority = int(parts[2])
+            estimated_cost = float(parts[3])
+            completion_percentage = int(parts[4])
+            project = Project(name, start_date, priority, estimated_cost, completion_percentage)
+            projects.append(project)
+
+            print(project)  # for testing
+            # print(projects) # for testing
+            # print(parts)  # for testing
+            # print(line)  # for testing
+
 
 main()
