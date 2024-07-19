@@ -122,6 +122,8 @@ def main():
         elif menu_choice == "U":
             print("Update project")
             # TODO: add update_project function
+        else:
+            print("Invalid choice")
         print(MENU)
         menu_choice = input(">>> ").upper()
     print("Would you like to save to projects.txt?")
