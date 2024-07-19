@@ -86,3 +86,47 @@ function update_project(projects)
     get new priority (can be blank)
 
 """
+
+DEFAULT_FILE = "projects.txt"
+MENU = """- (L)oad projects
+- (S)ave projects
+- (D)isplay projects
+- (F)ilter projects by date
+- (A)dd new project
+- (U)pdate project
+- (Q)uit"""
+
+
+def main():
+    """Run the project management program."""
+    print("Welcome to Pythonic Project Management")
+    # TODO: Add load project functionality
+    print(MENU)
+    menu_choice = input(">>> ").upper()
+    while menu_choice != "Q":
+        if menu_choice == "L":
+            print("Load projects")
+            # TODO: Add load_projects function
+        elif menu_choice == "S":
+            print("Save projects")
+            # TODO: add save_project function
+        elif menu_choice == "D":
+            print("Display projects")
+            # TODO: add display_projects function
+        elif menu_choice == "F":
+            print("Filter projects by date")
+            # TODO: add filter_projects function
+        elif menu_choice == "A":
+            print("Add new project")
+            # TODO: add add_project function
+        elif menu_choice == "U":
+            print("Update project")
+            # TODO: add update_project function
+        print(MENU)
+        menu_choice = input(">>> ").upper()
+    print("Would you like to save to projects.txt?")
+    # TODO: add save choice
+    # TODO: if save choice = yes, run save function
+    print("Thank you for using custom-built project management software.")
+
+main()
