@@ -36,6 +36,7 @@ def process_data(line):
 
 def print_guitars(my_guitars):
     """Print a list of guitars."""
+    my_guitars.sort()  # Sort guitars by year
     for guitar in my_guitars:
         print(guitar)
 
