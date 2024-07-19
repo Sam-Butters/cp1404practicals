@@ -21,6 +21,7 @@ def save_guitars_to_file(my_guitars):
     """Save a list of guitars to file."""
     with open(FILENAME, "w") as outfile:
         for guitar in my_guitars:
+            # Convert the parts of a guitar object to strings
             guitar_data = ",".join([str(guitar.name), str(guitar.year), str(guitar.cost)])
             print(guitar_data, file=outfile)
 
