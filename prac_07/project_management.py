@@ -123,7 +123,9 @@ def main():
             add_project(projects)
         elif menu_choice == "U":
             print("Update project")  # for testing
-            # TODO: add update_project function
+            update_project(projects)
+
+
         else:
             print("Invalid choice")
         print(MENU)
@@ -132,6 +134,18 @@ def main():
     # TODO: add save choice
     # TODO: if save choice = yes, run save function
     print("Thank you for using custom-built project management software.")
+
+
+def update_project(projects):
+    """Update a selected project's completion percentage and priority."""
+    # TODO: add update_project function
+    for number, project in enumerate(projects, start=1):
+        print(f"{number} {project}")
+    project_choice = projects[int(input("Project choice: ")) - 1]
+    print(project_choice)
+    new_percentage = int(input("New percentage: "))
+    new_priority = int(input("New priority: "))
+    project_choice.update_project(new_percentage, new_priority)
 
 
 def add_project(projects):
@@ -154,12 +168,11 @@ def display_projects(projects):
     print("Incomplete projects:")
     for project in projects:
         if project.completion_percentage != 100:
-            print("\t",project)
+            print("\t", project)
     print("Completed projects:")
     for project in projects:
         if project.completion_percentage == 100:
-            print("\t",project)
-
+            print("\t", project)
 
 
 def load_projects(projects):
