@@ -27,5 +27,6 @@ class Project:
         return self.start_date < other.start_date
 
     def update_project(self, new_completion_percentage, new_priority):
+        """Update attribute values from client code."""
         self.completion_percentage = new_completion_percentage
         self.priority = new_priority
