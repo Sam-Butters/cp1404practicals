@@ -102,8 +102,6 @@ MENU = """- (L)oad projects
 
 def main():
     """Run the project management program."""
-
-    # TODO: add error checking
     print("Welcome to Pythonic Project Management")
     projects = []
     load_projects(projects)
@@ -135,7 +133,7 @@ def main():
         menu_choice = input(">>> ").upper()
     print(f"Would you like to save to {DEFAULT_FILE}?")
     save_choice = input(">>> (Y/n) ").upper()
-    if save_choice == "Y" or save_choice == "":
+    if save_choice in ("Y", ""):
         save_projects(projects)
     else:
         print("Your project has not been saved.")
@@ -144,10 +142,8 @@ def main():
 
 def filter_project_dates(projects):
     """Filter projects by user chosen date."""
-    filter_date_string = input("Show projects that start after date (dd/mm/yyyy): ")
-    # TODO: get valid date
-
-    filter_date = datetime.datetime.strptime(filter_date_string, "%d/%m/%Y").date()
+    filter_date = get_valid_date("Show projects that start after date (dd/mm/yyyy): ")
+    # filter_date = datetime.datetime.strptime(filter_date_string, "%d/%m/%Y").date()
     for project in projects:
         start_date = datetime.datetime.strptime(project.start_date, "%d/%m/%Y").date()
         if filter_date < start_date:
@@ -184,6 +180,17 @@ def update_project(projects):
     project_choice.update_project(new_percentage, new_priority)
 
 
+def get_valid_date(prompt):
+    """Get a valid date in format dd/mm/yyyy."""
+    while True:
+        try:
+            date_string = input(prompt).strip()
+            date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
+            return date
+        except ValueError:
+            print("Invalid date format. Please enter a date in format dd/mm/yyyy.")
+
+
 def get_valid_number(prompt, min_value, max_value):
     """Prompt user to enter a valid integer within specified range."""
     while True:
@@ -191,8 +198,7 @@ def get_valid_number(prompt, min_value, max_value):
             value = int(input(prompt))
             if min_value <= value <= max_value:
                 return value
-            else:
-                print(f"Input must be between {min_value} and {max_value}. Try again.")
+            print(f"Input must be between {min_value} and {max_value}. Try again.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
@@ -230,8 +236,7 @@ def get_valid_cost(prompt, min_value):
             value = float(input(prompt))
             if value >= min_value:
                 return value
-            else:
-                print(f"Input must be between more than {min_value}")
+            print(f"Input must be between more than {min_value}")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
