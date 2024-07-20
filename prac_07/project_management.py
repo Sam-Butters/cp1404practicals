@@ -193,16 +193,40 @@ def get_valid_number(prompt, min_value, max_value):
 def add_project(projects):
     """Add a project to projects list."""
     print("Let's add a new project")
-    name = input("Name: ").title()  # TODO: error check name is not empty
+    name = get_valid_input("Name: ")
     start_date = input("Start date (dd/mm/yyyy): ")  # TODO: error check ddmmyyyy format is correct, can also be blank
     # Use today's date if input is empty
     if start_date == "":
         start_date = str(datetime.date.today().strftime("%d/%m/%Y"))
-    priority = int(input("Priority: "))  # TODO: error check for valid number, 1-9
-    cost_estimate = float(input("Cost estimate: "))  # TODO: error check for valid number, cannot be <0
-    percent_complete = int(input("Percentage complete: "))  # TODO: error check for valid number, 0-100
+    priority = get_valid_number("Priority (1-9): ", 1, 9)
+
+    cost_estimate = get_valid_cost("Cost estimate: ", 0)
+
+    percent_complete = get_valid_number("Percentage complete (0-100): ", 0, 100)  # TODO: error check for valid number, 0-100
     project = Project(name, start_date, priority, cost_estimate, percent_complete)
     projects.append(project)
+
+
+def get_valid_input(prompt):
+    """Get a non-empty input."""
+    value = input(prompt).title()  # TODO: error check name is not empty
+    while value == "":
+        print("Input cannot be blank")
+        value = input(prompt).title()
+    return value
+
+
+def get_valid_cost(prompt, min_value):
+    """Get non-negative input"""
+    while True:
+        try:
+            value = float(input(prompt))
+            if value >= min_value:
+                return value
+            else:
+                print(f"Input must be between more than {min_value}")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 
 def display_projects(projects):
