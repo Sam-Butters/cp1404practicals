@@ -180,29 +180,6 @@ def update_project(projects):
     project_choice.update_project(new_percentage, new_priority)
 
 
-def get_valid_date(prompt):
-    """Get a valid date in format dd/mm/yyyy."""
-    while True:
-        try:
-            date_string = input(prompt).strip()
-            date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
-            return date
-        except ValueError:
-            print("Invalid date format. Please enter a date in format dd/mm/yyyy.")
-
-
-def get_valid_number(prompt, min_value, max_value):
-    """Prompt user to enter a valid integer within specified range."""
-    while True:
-        try:
-            value = int(input(prompt))
-            if min_value <= value <= max_value:
-                return value
-            print(f"Input must be between {min_value} and {max_value}. Try again.")
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
-
-
 def add_project(projects):
     """Add a project to projects list."""
     print("Let's add a new project")
@@ -218,27 +195,6 @@ def add_project(projects):
     percent_complete = get_valid_number("Percentage complete (0-100): ", 0, 100)
     project = Project(name, start_date, priority, cost_estimate, percent_complete)
     projects.append(project)
-
-
-def get_valid_input(prompt):
-    """Get a non-empty input."""
-    value = input(prompt).title()
-    while value == "":
-        print("Input cannot be blank")
-        value = input(prompt).title()
-    return value
-
-
-def get_valid_cost(prompt, min_value):
-    """Get non-negative input"""
-    while True:
-        try:
-            value = float(input(prompt))
-            if value >= min_value:
-                return value
-            print(f"Input must be between more than {min_value}")
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
 
 
 def display_projects(projects):
@@ -284,6 +240,50 @@ def load_projects(projects):
                 projects.append(project)
             else:
                 print(f"Skipping invalid line: {line}")
+
+
+def get_valid_date(prompt):
+    """Get a valid date in format dd/mm/yyyy."""
+    while True:
+        try:
+            date_string = input(prompt).strip()
+            date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
+            return date
+        except ValueError:
+            print("Invalid date format. Please enter a date in format dd/mm/yyyy.")
+
+
+def get_valid_number(prompt, min_value, max_value):
+    """Prompt user to enter a valid integer within specified range."""
+    while True:
+        try:
+            value = int(input(prompt))
+            if min_value <= value <= max_value:
+                return value
+            print(f"Input must be between {min_value} and {max_value}. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+
+def get_valid_input(prompt):
+    """Get a non-empty input."""
+    value = input(prompt).title()
+    while value == "":
+        print("Input cannot be blank")
+        value = input(prompt).title()
+    return value
+
+
+def get_valid_cost(prompt, min_value):
+    """Get non-negative input"""
+    while True:
+        try:
+            value = float(input(prompt))
+            if value >= min_value:
+                return value
+            print(f"Input must be between more than {min_value}")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 
 main()
