@@ -110,22 +110,17 @@ def main():
     menu_choice = input(">>> ").upper()
     while menu_choice != "Q":
         if menu_choice == "L":
-            print("Load projects")  # for testing
             load_projects(projects)
         elif menu_choice == "S":
-            print("Save projects")  # for testing
+
             save_projects(projects)
         elif menu_choice == "D":
-            print("Display projects")  # for testing
             display_projects(projects)
         elif menu_choice == "F":
-            print("Filter projects by date")  # for testing
             filter_project_dates(projects)
         elif menu_choice == "A":
-            print("Add new project")  # for testing
             add_project(projects)
         elif menu_choice == "U":
-            print("Update project")  # for testing
             update_project(projects)
         else:
             print("Invalid choice")
@@ -143,9 +138,8 @@ def main():
 def filter_project_dates(projects):
     """Filter projects by user chosen date."""
     filter_date = get_valid_date("Show projects that start after date (dd/mm/yyyy): ")
-    # filter_date = datetime.datetime.strptime(filter_date_string, "%d/%m/%Y").date()
     for project in projects:
-        start_date = datetime.datetime.strptime(project.start_date, "%d/%m/%Y").date()
+        start_date = str(datetime.datetime.strptime(project.start_date, "%d/%m/%Y").date())
         if filter_date < start_date:
             print(project)
 
@@ -155,14 +149,13 @@ def save_projects(projects):
     save_file_name = input("Save as:  ")
     if save_file_name == "":
         save_file_name = DEFAULT_FILE
-    with open(save_file_name, "w") as outfile:
+    with open(save_file_name, "w", encoding="utf-8") as outfile:
         print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
         for project in projects:
             print(
                 f"{project.name}\t{project.start_date}\t{project.priority}\t{project.cost_estimate}\t"
                 f"{project.completion_percentage}", file=outfile)
         print(f"Your projects have been saved as {save_file_name}")
-        # return save_file_name
 
 
 def update_project(projects):
@@ -211,16 +204,17 @@ def load_projects(projects):
         try:
             file = DEFAULT_FILE
         except FileNotFoundError:
-            return f"{DEFAULT_FILE} not found."
+            print(f"{DEFAULT_FILE} not found.")
     else:
         try:
-            file = input("Load file.\nFile name: ")  # Ask the user for a file name, set as default if user hits enter
+            # Ask the user for a file name, set as default if user hits enter
+            file = input("Load file.\nFile name: ")
             print(f"{file} loaded.")
         except FileNotFoundError:
             print(f"File {file} not found., using default file. ({DEFAULT_FILE})")
             file = DEFAULT_FILE
 
-    with open(file, "r") as infile:
+    with open(file, "r", encoding="utf-8") as infile:
         infile.readline()  # Bypass the headings line
         projects.clear()  # Reset the projects list
         for line in infile:
@@ -242,7 +236,8 @@ def get_valid_date(prompt):
     while True:
         date_string = input(prompt).strip()
         if date_string == "":
-            return datetime.date.today().strftime("%d/%m/%Y")  # Return today's date if input is blank
+            # Return today's date if input is blank
+            return datetime.date.today().strftime("%d/%m/%Y")
         try:
             date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
             return date.strftime("%d/%m/%Y")
