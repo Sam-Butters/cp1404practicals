@@ -184,14 +184,9 @@ def add_project(projects):
     """Add a project to projects list."""
     print("Let's add a new project")
     name = get_valid_input("Name: ")
-    start_date = input("Start date (dd/mm/yyyy): ")  # TODO: error check ddmmyyyy format is correct, can also be blank
-    # Use today's date if input is empty
-    if start_date == "":
-        start_date = str(datetime.date.today().strftime("%d/%m/%Y"))
+    start_date = get_valid_date("Start date (dd/mm/yyyy): ")
     priority = get_valid_number("Priority (1-9): ", 1, 9)
-
     cost_estimate = get_valid_cost("Cost estimate: ", 0)
-
     percent_complete = get_valid_number("Percentage complete (0-100): ", 0, 100)
     project = Project(name, start_date, priority, cost_estimate, percent_complete)
     projects.append(project)
@@ -243,12 +238,14 @@ def load_projects(projects):
 
 
 def get_valid_date(prompt):
-    """Get a valid date in format dd/mm/yyyy."""
+    """Get a valid date in format dd/mm/yyyy, with today's date as default if input is blank."""
     while True:
+        date_string = input(prompt).strip()
+        if date_string == "":
+            return datetime.date.today().strftime("%d/%m/%Y")  # Return today's date if input is blank
         try:
-            date_string = input(prompt).strip()
             date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
-            return date
+            return date.strftime("%d/%m/%Y")
         except ValueError:
             print("Invalid date format. Please enter a date in format dd/mm/yyyy.")
 
