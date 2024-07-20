@@ -107,6 +107,7 @@ def main():
     print("Welcome to Pythonic Project Management")
     projects = []
     load_projects(projects)
+    print(f"Loaded {len(projects)} projects from {DEFAULT_FILE}")
     print(MENU)
     menu_choice = input(">>> ").upper()
     while menu_choice != "Q":
@@ -136,6 +137,8 @@ def main():
     save_choice = input(">>> (Y/n) ").upper()
     if save_choice == "Y" or save_choice == "":
         save_projects(projects)
+    else:
+        print("Your project has not been saved.")
     print("Thank you for using custom-built project management software.")
 
 
@@ -153,13 +156,17 @@ def filter_project_dates(projects):
 
 def save_projects(projects):
     """Save projects to file"""
-    save_file_name = input("Where do you want to save your projects? (filename.txt) ")
+    save_file_name = input("Save as:  ")
+    if save_file_name == "":
+        save_file_name = DEFAULT_FILE
     with open(save_file_name, "w") as outfile:
         print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
         for project in projects:
             print(
                 f"{project.name}\t{project.start_date}\t{project.priority}\t{project.cost_estimate}\t"
                 f"{project.completion_percentage}", file=outfile)
+        print(f"Your projects have been saved as {save_file_name}")
+        # return save_file_name
 
 
 def update_project(projects):
@@ -202,14 +209,14 @@ def add_project(projects):
 
     cost_estimate = get_valid_cost("Cost estimate: ", 0)
 
-    percent_complete = get_valid_number("Percentage complete (0-100): ", 0, 100)  # TODO: error check for valid number, 0-100
+    percent_complete = get_valid_number("Percentage complete (0-100): ", 0, 100)
     project = Project(name, start_date, priority, cost_estimate, percent_complete)
     projects.append(project)
 
 
 def get_valid_input(prompt):
     """Get a non-empty input."""
-    value = input(prompt).title()  # TODO: error check name is not empty
+    value = input(prompt).title()
     while value == "":
         print("Input cannot be blank")
         value = input(prompt).title()
@@ -243,29 +250,35 @@ def display_projects(projects):
 
 def load_projects(projects):
     """Load a project from file."""
-    # TODO: add error checking to ensure default file exists
-    if not projects:  # Check if projects list is empty to determine if this is the first time running the function
-        file = DEFAULT_FILE
-    else:  # TODO: check file name exists
-        file = input("File name: ")  # Ask the user for a file name, set as default if user hits enter
-        if file == "":
+    # On the first time running the function (empty projects list), use the default file
+    if not projects:
+        try:
             file = DEFAULT_FILE
+        except FileNotFoundError:
+            return f"{DEFAULT_FILE} not found."
+    else:
+        try:
+            file = input("Load file.\nFile name: ")  # Ask the user for a file name, set as default if user hits enter
+            print(f"{file} loaded.")
+        except FileNotFoundError:
+            print(f"File {file} not found., using default file. ({DEFAULT_FILE})")
+            file = DEFAULT_FILE
+
     with open(file, "r") as infile:
         infile.readline()  # Bypass the headings line
+        projects.clear()  # Reset the projects list
         for line in infile:
             parts = line.strip().split("\t")
-            name = parts[0]
-            start_date = parts[1]
-            priority = int(parts[2])
-            estimated_cost = float(parts[3])
-            completion_percentage = int(parts[4])
-            project = Project(name, start_date, priority, estimated_cost, completion_percentage)
-            projects.append(project)
-
-            print(project)  # for testing
-            # print(projects) # for testing
-            # print(parts)  # for testing
-            # print(line)  # for testing
+            if len(parts) == 5:  # check the file line is a valid format
+                name = parts[0]
+                start_date = parts[1]
+                priority = int(parts[2])
+                estimated_cost = float(parts[3])
+                completion_percentage = int(parts[4])
+                project = Project(name, start_date, priority, estimated_cost, completion_percentage)
+                projects.append(project)
+            else:
+                print(f"Skipping invalid line: {line}")
 
 
 main()
