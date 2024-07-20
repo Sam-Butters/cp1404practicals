@@ -2,6 +2,7 @@
 CP1404 Prac07 - Project Management
 Sam Butters
 Start time: 15:17 break: 18:14
+            start again at 10:20
 Estimated completion time: 90 minutes
 Actual completion time:
 
@@ -140,7 +141,9 @@ def main():
 
 def filter_project_dates(projects):
     """Filter projects by user chosen date."""
-    filter_date_string = input("Show projects that start after date (dd/mm/yyyy): ")  # TODO: get valid date
+    filter_date_string = input("Show projects that start after date (dd/mm/yyyy): ")
+    # TODO: get valid date
+
     filter_date = datetime.datetime.strptime(filter_date_string, "%d/%m/%Y").date()
     for project in projects:
         start_date = datetime.datetime.strptime(project.start_date, "%d/%m/%Y").date()
@@ -163,11 +166,28 @@ def update_project(projects):
     """Update a selected project's completion percentage and priority."""
     for number, project in enumerate(projects, start=1):
         print(f"{number} {project}")
-    project_choice = projects[int(input("Project choice: ")) - 1]  # TODO: error check for valid number choice
-    print(project_choice)
-    new_percentage = int(input("New percentage: "))  # TODO: get valid number (0-100)
-    new_priority = int(input("New priority: "))  # TODO: get valid number (1-9)
+    project_choice_index = get_valid_number("Project choice: ", 1, len(projects)) - 1
+    project_choice = projects[project_choice_index]
+
+    print(f"{project_choice}")
+
+    new_percentage = get_valid_number("New percentage (0-100): ", 0, 100)
+    new_priority = get_valid_number("New priority (1-9): ", 1, 9)
+
     project_choice.update_project(new_percentage, new_priority)
+
+
+def get_valid_number(prompt, min_value, max_value):
+    """Prompt user to enter a valid integer within specified range."""
+    while True:
+        try:
+            value = int(input(prompt))
+            if min_value <= value <= max_value:
+                return value
+            else:
+                print(f"Input must be between {min_value} and {max_value}. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 
 def add_project(projects):
