@@ -30,3 +30,4 @@ for i, guitar in enumerate(guitars, 1):
         vintage_string = "(vintage)"
     print(
         f"Guitar {i}: {guitar.name:>{max_name_length}} ({guitar.year}), worth ${guitar.cost:>{max_cost_length}.2f} {vintage_string}")
+
