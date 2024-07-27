@@ -33,21 +33,27 @@ class ConvertMilesApp(App):
             miles = float(self.root.ids.input_miles.text)
             return miles
         except ValueError:
-            pass
+            return 0.0
 
-    def handle_up(self):
-        """Handle up button press, increase text input by 1."""
-        print("upbutton test")
+    # def handle_up(self):
+    #     """Handle up button press, increase text input by 1."""
+    #     print("upbutton test")
+    #     miles = self.format_miles()
+    #     miles += 1
+    #     self.root.ids.input_miles.text = str(miles)
+    #
+    #
+    # def handle_down(self):
+    #     """Handle down button press, decrease text input by 1."""
+    #     print("downbutton test")
+    #     miles = self.format_miles()
+    #     miles -= 1
+    #     self.root.ids.input_miles.text = str(miles)
+
+    def handle_increment(self, change):
+        """Handle up/down button press, changing text input by 1."""
         miles = self.format_miles()
-        miles += 1
-        self.root.ids.input_miles.text = str(miles)
-
-
-    def handle_down(self):
-        """Handle down button press, decrease text input by 1."""
-        print("downbutton test")
-        miles = self.format_miles()
-        miles -= 1
+        miles += change
         self.root.ids.input_miles.text = str(miles)
 
 ConvertMilesApp().run()
