@@ -12,15 +12,15 @@ MILES_TO_KM = 1.60934
 
 
 class ConvertMilesApp(App):
-    """An app to convert miles to Km"""
+    """Kivy app to convert miles to kilometers."""
     def build(self):
-        """Build the Kivy app from the kv file"""
+        """Build the Kivy app from the kv file."""
         Window.size = (400, 200)
         self.title = "Convert Miles to Kilometers"
         self.root = Builder.load_file('convert_miles_km.kv')
         return self.root
 
-    def handle_conversion(self):
+    def handle_calculate(self):
         """Handle calculation, output result to label widget."""
         print("calculate button test")
         miles = self.format_miles()
@@ -28,32 +28,18 @@ class ConvertMilesApp(App):
         self.root.ids.output_label.text = str(kilometers)
 
     def format_miles(self):
-        """Get miles from input, convert to a float"""
+        """Get miles from input, convert to a float."""
         try:
             miles = float(self.root.ids.input_miles.text)
             return miles
         except ValueError:
             return 0.0
 
-    # def handle_up(self):
-    #     """Handle up button press, increase text input by 1."""
-    #     print("upbutton test")
-    #     miles = self.format_miles()
-    #     miles += 1
-    #     self.root.ids.input_miles.text = str(miles)
-    #
-    #
-    # def handle_down(self):
-    #     """Handle down button press, decrease text input by 1."""
-    #     print("downbutton test")
-    #     miles = self.format_miles()
-    #     miles -= 1
-    #     self.root.ids.input_miles.text = str(miles)
-
     def handle_increment(self, change):
         """Handle up/down button press, changing text input by 1."""
         miles = self.format_miles()
         miles += change
         self.root.ids.input_miles.text = str(miles)
+
 
 ConvertMilesApp().run()
