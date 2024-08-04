@@ -1,5 +1,5 @@
 """
-Unreliable car
+Unreliable car class.
 """
 
 from random import randint
